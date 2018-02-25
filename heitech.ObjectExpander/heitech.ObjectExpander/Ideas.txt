@@ -1,0 +1,14 @@
+﻿reflection cache for obj
+
+instead of dictionary in <AllProperties> return Mapper Type 
+	: <Mapper> can change object properties and 
+    : has a reference to the originals object references.
+	--> Mapper mapper = obj.AllProperties()
+		mapper.Property1 = newValue;
+		Assert.AreSame(mapper.Property1, obj.Property1);
+
+
+Config:
+	AttributeMap per Typ or global (global is default)
+		--> change return type on attributefactory
+	SafeInvocation --> no exceptions on Invoke Calls

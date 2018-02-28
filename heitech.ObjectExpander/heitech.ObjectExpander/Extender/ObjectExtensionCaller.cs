@@ -1,42 +1,42 @@
-﻿using heitech.ObjectExpander.Configuration;
-using heitech.ObjectExpander.ExtensionMap;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using heitech.ObjectExpander.Configuration;
+using heitech.ObjectExpander.ExtensionMap;
 using static heitech.ObjectExpander.Extender.ObjectExtender;
 
 namespace heitech.ObjectExpander.Extender
 {
-    public static class ObjectExtensionCaller
+    public static class IObjectExtensionCaller
     {
-        public static void Call<TKey>(this object obj, TKey key)
+        public static void Call<TKey>(this IMarkedExtendable obj, TKey key)
         {
-            var args = new object[] { };
+            var args = new IMarkedExtendable[] { };
             InvokeOnMap(() => AttributeMap().Invoke(key, args), obj, key, null, args);
         }
 
-        public static void Call<TKey, TParam>(this object obj, TKey key, TParam param)
+        public static void Call<TKey, TParam>(this IMarkedExtendable obj, TKey key, TParam param)
         {
             var args = new object[] { param};
             InvokeOnMap(() => AttributeMap().Invoke(key, args), obj, key, null, args);
         }
 
-        public static void Call<TKey, TParam, TParam2>(this object obj, TKey key, TParam param, TParam2 param2)
+        public static void Call<TKey, TParam, TParam2>(this IMarkedExtendable obj, TKey key, TParam param, TParam2 param2)
         {
             var args = new object[] { param, param2 };
             InvokeOnMap(() => AttributeMap().Invoke(key, args), obj, key, null, args);
         }
 
-        static void Throw(object obj, object key) => throw new AttributeNotFoundException(obj.GetType(), key);
+        static void Throw(IMarkedExtendable obj, object key) => throw new AttributeNotFoundException(obj.GetType(), key);
 
-        public static Task CallAsync<TKey>(this object obj, TKey key) 
+        public static Task CallAsync<TKey>(this IMarkedExtendable obj, TKey key) 
             => throw new NotImplementedException();
-        public static Task CallAsync<TKey, TParam>(this object obj, TKey key, TParam param)
+        public static Task CallAsync<TKey, TParam>(this IMarkedExtendable obj, TKey key, TParam param)
             => throw new NotImplementedException();
-        public static Task CallAsync<TKey, TParam, TParam2>(this object obj, TKey key, TParam param, TParam2 param2)
+        public static Task CallAsync<TKey, TParam, TParam2>(this IMarkedExtendable obj, TKey key, TParam param, TParam2 param2)
             => throw new NotImplementedException();
 
 
-        public static TResult Invoke<TKey, TResult>(this object obj, TKey key)
+        public static TResult Invoke<TKey, TResult>(this IMarkedExtendable obj, TKey key)
         {
             TResult result = default(TResult);
             InvokeOnMap(() => result = (TResult)AttributeMap().Invoke(key),
@@ -45,7 +45,7 @@ namespace heitech.ObjectExpander.Extender
             return result;
         }
 
-        public static TResult Invoke<TKey, TResult, TParam>(this object obj, TKey key, TParam param)
+        public static TResult Invoke<TKey, TResult, TParam>(this IMarkedExtendable obj, TKey key, TParam param)
         {
             TResult result = default(TResult);
                 InvokeOnMap(() => result = (TResult)AttributeMap().Invoke(key, param),
@@ -53,7 +53,7 @@ namespace heitech.ObjectExpander.Extender
             return result;
         }
 
-        static void InvokeOnMap(Action _do, object obj, object key, Type returnType, params object[] parameters)
+        static void InvokeOnMap(Action _do, IMarkedExtendable obj, object key, Type returnType, params object[] parameters)
         {
             if (AttributeMap().CanInvoke(key, returnType, parameters))
                 _do();
@@ -62,7 +62,7 @@ namespace heitech.ObjectExpander.Extender
                     Throw(obj, key);
         }
 
-        public static TResult Invoke<TKey, TResult, TParam, TParam2>(this object obj, TKey key, TParam param, TParam2 param2)
+        public static TResult Invoke<TKey, TResult, TParam, TParam2>(this IMarkedExtendable obj, TKey key, TParam param, TParam2 param2)
         {
             TResult result = default(TResult);
             InvokeOnMap(() => result = (TResult)AttributeMap().Invoke(key, param, param2),
@@ -70,11 +70,11 @@ namespace heitech.ObjectExpander.Extender
             return result;
         }
 
-        public static Task<TResult> InvokeAsync<TKey, TResult>(this object obj, TKey key) 
+        public static Task<TResult> InvokeAsync<TKey, TResult>(this IMarkedExtendable obj, TKey key) 
             => throw new NotImplementedException();
-        public static Task<TResult> InvokeAsync<TKey, TResult, TParam>(this object obj, TKey key, TParam param)
+        public static Task<TResult> InvokeAsync<TKey, TResult, TParam>(this IMarkedExtendable obj, TKey key, TParam param)
             => throw new NotImplementedException();
-        public static Task<TResult> InvokeAsync<TKey, TResult, TParam, TParam2>(this object obj, TKey key, TParam param, TParam2 param2)
+        public static Task<TResult> InvokeAsync<TKey, TResult, TParam, TParam2>(this IMarkedExtendable obj, TKey key, TParam param, TParam2 param2)
             => throw new NotImplementedException();
     }
 }

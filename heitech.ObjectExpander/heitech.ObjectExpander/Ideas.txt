@@ -12,3 +12,5 @@ Config:
 	AttributeMap per Typ or global (global is default)
 		--> change return type on attributefactory
 	SafeInvocation --> no exceptions on Invoke Calls
+
+Create MarkerInterface

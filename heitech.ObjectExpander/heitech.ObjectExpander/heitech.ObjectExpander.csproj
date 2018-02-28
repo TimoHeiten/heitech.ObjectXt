@@ -50,6 +50,7 @@
     <Compile Include="ExtensionMap\Attributes\ExtensionAttributeBase.cs" />
     <Compile Include="ExtensionMap\Attributes\FuncAttribute.cs" />
     <Compile Include="ExtensionMap\TypeSpecificAttributeMap.cs" />
+    <Compile Include="Extender\IMarkedExtendable.cs" />
     <Compile Include="Interfaces\IAttributeMap.cs" />
     <Compile Include="Interfaces\IExtensionAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

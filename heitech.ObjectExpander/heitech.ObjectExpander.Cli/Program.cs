@@ -8,7 +8,7 @@ namespace heitech.ObjectExpander.Cli
     {
         static void Main(string[] args)
         {
-            var obj = new object();
+            var obj = new MarkedObject();
 
             obj.RegisterAction("write", () => Console.WriteLine("von key aufgerufen"));
             obj.RegisterAction<string, int>("writeNumber", i => Console.WriteLine("mit nummer: " + i));
@@ -38,5 +38,8 @@ namespace heitech.ObjectExpander.Cli
             Console.WriteLine(obj.Invoke<string, int>("funcy"));
             Console.ReadLine();
         }
+
+        private class MarkedObject : IMarkedExtendable
+        { }
     }
 }

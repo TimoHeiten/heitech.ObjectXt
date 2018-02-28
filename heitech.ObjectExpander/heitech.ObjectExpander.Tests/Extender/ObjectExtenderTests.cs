@@ -11,7 +11,7 @@ namespace heitech.ObjectExpander.Tests.Extender
     [TestClass]
     public class ObjectExtenderTests
     {
-        readonly object extender = new object();
+        readonly IMarkedExtendable extender = new MarkedObject();
         private readonly Mock<IAttributeMap> map = new Mock<IAttributeMap>();
 
         [TestInitialize]

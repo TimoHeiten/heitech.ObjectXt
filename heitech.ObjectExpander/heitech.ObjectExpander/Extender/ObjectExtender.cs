@@ -26,7 +26,7 @@ namespace heitech.ObjectExpander.Extender
             }
         }
 
-        public static void RegisterAction<TKey>(this object obj, TKey key, Action action)
+        public static void RegisterAction<TKey>(this IMarkedExtendable obj, TKey key, Action action)
         {
             lock (locker)
             {
@@ -34,7 +34,7 @@ namespace heitech.ObjectExpander.Extender
             }
         }
 
-        public static void RegisterAction<TKey, TParam>(this object obj, TKey key, Action<TParam> action)
+        public static void RegisterAction<TKey, TParam>(this IMarkedExtendable obj, TKey key, Action<TParam> action)
         {
             lock (locker)
             {
@@ -42,7 +42,7 @@ namespace heitech.ObjectExpander.Extender
             }
         }
 
-        public static void RegisterAction<TKey, TParam, TParam2>(this object obj, TKey key, Action<TParam, TParam2> action)
+        public static void RegisterAction<TKey, TParam, TParam2>(this IMarkedExtendable obj, TKey key, Action<TParam, TParam2> action)
         {
             lock (locker)
             {
@@ -50,28 +50,28 @@ namespace heitech.ObjectExpander.Extender
             }
         }
 
-        public static void RegisterAsyncAction<TKey>(this object obj, TKey key, Func<Task> func)
+        public static void RegisterAsyncAction<TKey>(this IMarkedExtendable obj, TKey key, Func<Task> func)
             => throw new NotImplementedException();
-        public static void RegisterAsyncAction<TKey, TParam>(this object obj, TKey key, Func<TParam, Task> func)
+        public static void RegisterAsyncAction<TKey, TParam>(this IMarkedExtendable obj, TKey key, Func<TParam, Task> func)
             => throw new NotImplementedException();
-        public static void RegisterAsyncAction<TKey, TParam, TParam2>(this object obj, TKey key, Func<TParam, TParam2, Task> func)
+        public static void RegisterAsyncAction<TKey, TParam, TParam2>(this IMarkedExtendable obj, TKey key, Func<TParam, TParam2, Task> func)
             => throw new NotImplementedException();
 
-        public static void RegisterFunc<TKey, TResult>(this object obj, TKey key, Func<TResult> func)
+        public static void RegisterFunc<TKey, TResult>(this IMarkedExtendable obj, TKey key, Func<TResult> func)
         {
             lock(locker)
             {
                 AttributeMap().Add(obj, key, CreateFuncAttribute<TKey, TResult>(key, func));
             }
         }
-        public static void RegisterFunc<TKey, TResult, TParam>(this object obj, TKey key, Func<TParam, TResult> func)
+        public static void RegisterFunc<TKey, TResult, TParam>(this IMarkedExtendable obj, TKey key, Func<TParam, TResult> func)
         {
             lock (locker)
             {
                 AttributeMap().Add(obj, key, CreateFuncAttribute(key, func));
             }
         }
-        public static void RegisterFunc<TKey, TResult, TParam, TParam2>(this object obj, TKey key, Func<TResult, TParam, TParam2> func)
+        public static void RegisterFunc<TKey, TResult, TParam, TParam2>(this IMarkedExtendable obj, TKey key, Func<TResult, TParam, TParam2> func)
         {
             lock (locker)
             {
@@ -79,11 +79,11 @@ namespace heitech.ObjectExpander.Extender
             }
         }
 
-        public static void RegisterFuncAsync<TKey, TResult>(this object obj, TKey key, Func<Task<TResult>> func) 
+        public static void RegisterFuncAsync<TKey, TResult>(this IMarkedExtendable obj, TKey key, Func<Task<TResult>> func) 
             => throw new NotImplementedException();
-        public static void RegisterFuncAsync<TKey, TResult, TParam>(this object obj, TKey key, Func<TParam, Task<TResult>> func)
+        public static void RegisterFuncAsync<TKey, TResult, TParam>(this IMarkedExtendable obj, TKey key, Func<TParam, Task<TResult>> func)
              => throw new NotImplementedException();
-        public static void RegisterFuncAsync<TKey, TResult, TParam, TParam2>(this object obj, TKey key, Func<TParam, TParam2, Task<TResult>> func)
+        public static void RegisterFuncAsync<TKey, TResult, TParam, TParam2>(this IMarkedExtendable obj, TKey key, Func<TParam, TParam2, Task<TResult>> func)
              => throw new NotImplementedException();
     }
 }

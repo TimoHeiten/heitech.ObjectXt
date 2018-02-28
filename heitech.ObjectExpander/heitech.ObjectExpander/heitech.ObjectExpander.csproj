@@ -54,11 +54,13 @@
     <Compile Include="Interfaces\IAttributeMap.cs" />
     <Compile Include="Interfaces\IExtensionAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\IMappedPropertyManager.cs" />
+    <Compile Include="Util\MappedPropertyManager.cs" />
     <Compile Include="Util\ObjectUtils.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Ideas.txt" />
+    <Content Include="Ideas_Todos.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

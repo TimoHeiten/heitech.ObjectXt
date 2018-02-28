@@ -7,13 +7,16 @@ namespace heitech.ObjectExpander.Util
 {
     public static class ObjectUtils
     {
-        public static Dictionary<string, object> AllProperties(this object obj)
+        public static IMappedPropertyManager GeneratePropertyManager(this object obj)
+            => new MappedPropertyManager(obj);
+
+        internal static Dictionary<string, object> AllProperties(this object obj)
         {
             var dict = new Dictionary<string, object>();
-            PropertyInfo[] propertyInfos = obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            PropertyInfo[] propertyInfos = obj.GetType().GetProperties(GetFlags());
             foreach (PropertyInfo item in propertyInfos)
             {
-                if (TryGetPropertyValue(obj, item.Name, out object value))
+                if (TryGetPropertyValue(obj, item.Name, propertyInfos, out object value))
                 {
                     dict.Add(item.Name, value);
                 }
@@ -21,11 +24,14 @@ namespace heitech.ObjectExpander.Util
             return dict;
         }
 
-        static bool TryGetPropertyValue(object obj, string name, out object value)
+        internal static BindingFlags GetFlags()
+            => BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Static;
+
+        static bool TryGetPropertyValue(object obj, string name, PropertyInfo[] infos, out object value)
         {
             bool isSuccess = false;
             value = null;
-            PropertyInfo first = obj.GetType().GetProperties().FirstOrDefault(x => x.Name == name);
+            PropertyInfo first = infos.FirstOrDefault(x => x.Name == name);
             if (first != null)
             {
                 value = first.GetValue(obj);
@@ -34,11 +40,11 @@ namespace heitech.ObjectExpander.Util
             return isSuccess;
         }
 
-        public static bool TryGetPropertyValue<TProperty>(this object obj, string name, out TProperty value)
+        internal static bool TryGetPropertyValue<TProperty>(this object obj, string name, out TProperty value)
         {
             value = default(TProperty);
             bool isSuccess = false;
-            if (TryGetPropertyValue(obj, name, out object val))
+            if (TryGetPropertyValue(obj, name, obj.GetType().GetProperties(GetFlags()), out object val))
             {
                 if (val != null && val.GetType().IsDownCastable(typeof(TProperty)) && !val.Equals(default(TProperty)))
                 {

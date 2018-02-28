@@ -69,6 +69,7 @@
     <Compile Include="ExtensionMap\AttributeFactoryTests.cs" />
     <Compile Include="MarkedObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\MappedPropertyManagerTests.cs" />
     <Compile Include="Util\ObjectUtilsTests.cs" />
   </ItemGroup>
   <ItemGroup>

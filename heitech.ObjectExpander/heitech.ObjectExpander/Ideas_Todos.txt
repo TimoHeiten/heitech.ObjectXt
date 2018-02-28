@@ -1,0 +1,10 @@
+﻿// reflection cache for obj
+
+Auto property  with lambda syntax does not work with set.
+
+
+
+Config:
+	AttributeMap per Typ or global (global is default)
+		--> change return type on attributefactory
+	SafeInvocation --> no exceptions on Invoke Calls

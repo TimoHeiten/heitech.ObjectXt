@@ -11,9 +11,11 @@ namespace heitech.ObjectExpander.ExtensionMap
 
         public void Add<TKey>(object extended, TKey key, IExtensionAttribute func)
         {
-            // in global extended object is not of interest
+            // in global extended object (argument) is considered
             if (!MappedAttributes.ContainsKey(key))
+            {
                 MappedAttributes.Add(key, func);
+            }
             else throw new AlreadyExtendedException(key);
         }
 
@@ -26,7 +28,9 @@ namespace heitech.ObjectExpander.ExtensionMap
         public object Invoke<TKey>(TKey key, params object[] parameters)
         {
             if (MappedAttributes.TryGetValue(key, out IExtensionAttribute attr))
+            {
                 return attr.Invoke(parameters);
+            }
             else return null;
         }
 

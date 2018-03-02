@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\ObjectExtenderConfig.cs" />
+    <Compile Include="Extender\MarkedExtandableRegister.cs" />
     <Compile Include="Extender\ObjectExtender.cs" />
     <Compile Include="Extender\ObjectExtensionCaller.cs" />
     <Compile Include="ExtensionMap\AttributeFactory.cs" />

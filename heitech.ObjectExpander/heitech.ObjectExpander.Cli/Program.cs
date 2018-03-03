@@ -9,6 +9,8 @@ namespace heitech.ObjectExpander.Cli
     {
         static void Main(string[] args)
         {
+            ObjectExtender.StartExtension();
+
             var obj = new MarkedObject();
 
             obj.RegisterAction("write", () => Console.WriteLine("von key aufgerufen"));

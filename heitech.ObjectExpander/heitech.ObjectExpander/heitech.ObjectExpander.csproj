@@ -52,6 +52,7 @@
     <Compile Include="ExtensionMap\TypeSpecificAttributeMap.cs" />
     <Compile Include="Extender\IMarkedExtendable.cs" />
     <Compile Include="Interfaces\IAttributeMap.cs" />
+    <Compile Include="Interfaces\IAttriubteFactory.cs" />
     <Compile Include="Interfaces\IExtensionAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\IMappedPropertyManager.cs" />

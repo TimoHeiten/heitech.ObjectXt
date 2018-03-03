@@ -18,7 +18,6 @@ namespace heitech.ObjectExpander.Tests.ExtensionMap
             Assert.AreEqual(0, globalAttr.Count);
             globalAttr.Add(obj, "key", moq.Object);
             Assert.AreEqual(1, globalAttr.Count);
-
         }
 
 

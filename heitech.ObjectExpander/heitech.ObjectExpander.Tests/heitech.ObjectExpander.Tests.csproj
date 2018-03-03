@@ -67,6 +67,7 @@
     <Compile Include="ExtensionMap\ExtensionAttributeBaseTests.cs" />
     <Compile Include="ExtensionMap\ExtensionAttributeInvokeTests.cs" />
     <Compile Include="ExtensionMap\AttributeFactoryTests.cs" />
+    <Compile Include="ExtensionMap\TypeSpecificAttributeMapTests.cs" />
     <Compile Include="MarkedObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\MappedPropertyManagerTests.cs" />

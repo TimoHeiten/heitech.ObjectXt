@@ -4,41 +4,44 @@ using System;
 
 namespace heitech.ObjectExpander.ExtensionMap
 {
-    internal static class AttributeFactory
+    internal class AttributeFactory : IAttributeFactory
     {
-        private static Func<IAttributeMap> injectedMap;
-        internal static void SetMap(Func<IAttributeMap> func) => injectedMap = func;
+        private readonly IAttributeMap map;
 
-        internal static IAttributeMap CreateMap()
+        private AttributeFactory(IAttributeMap map)
         {
-            if (injectedMap != null) return injectedMap();
-            else return new GlobalAttributeMap();
+            this.map = map;
         }
 
+        public IAttributeMap GetMap() => map;
+
+        internal static IAttributeFactory Create(IAttributeMap map) => new AttributeFactory(map);
+
+        internal static IAttributeFactory CreateGlobal() => new AttributeFactory(new GlobalAttributeMap());
 
         // Actions
 // ##################################################################################################
-        internal static IExtensionAttribute CreateActionAttribute<TKey>(TKey key, Action a)
+        public IExtensionAttribute CreateActionAttribute<TKey>(TKey key, Action a)
             => new ActionAttribute(key, a);
 
-        internal static IExtensionAttribute CreateActionAttribute<TKey, T>(TKey key, Action<T> a)
+        public IExtensionAttribute CreateActionAttribute<TKey, T>(TKey key, Action<T> a)
             => new ActionParamAttribute<T>(key, a);
 
-        internal static IExtensionAttribute CreateActionAttribute<TKey, T, T2>(TKey key, Action<T, T2> a)
+        public IExtensionAttribute CreateActionAttribute<TKey, T, T2>(TKey key, Action<T, T2> a)
             => new ActionDualParameter<T, T2>(key, a);
 
 
         // Funcs
 // ################################################################################################## 
-        internal static IExtensionAttribute CreateFuncAttribute<TKey, TResult>(TKey key,
+        public IExtensionAttribute CreateFuncAttribute<TKey, TResult>(TKey key,
             Func<TResult> func)
             => new FuncAttribute<TResult>(key, func);
 
-        internal static IExtensionAttribute CreateFuncAttribute<TKey, TResult, TParam>(TKey key,
+        public IExtensionAttribute CreateFuncAttribute<TKey, TResult, TParam>(TKey key,
             Func<TParam, TResult> func)
             => new FuncAttributeParam<TResult, TParam>(key, func);
 
-        internal static IExtensionAttribute CreateFuncAttribute<TKey, TResult, TParam, TParam2>(
+        public IExtensionAttribute CreateFuncAttribute<TKey, TResult, TParam, TParam2>(
             TKey key, Func<TParam, TParam2, TResult> func)
             => new FuncAttributeDualParam<TResult, TParam, TParam2>(key, func);
 

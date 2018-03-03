@@ -1,36 +1,49 @@
-﻿using heitech.ObjectExpander.Interfaces;
+﻿using heitech.ObjectExpander.ExtensionMap;
+using heitech.ObjectExpander.Interfaces;
 using System;
 using System.Threading.Tasks;
-using static heitech.ObjectExpander.ExtensionMap.AttributeFactory;
 
 namespace heitech.ObjectExpander.Extender
 {
     public static class ObjectExtender
     {
-        internal static void TestCleanup() => map = null;
-
-        static object locker = new object();
-        static IAttributeMap map;
-        internal static IAttributeMap AttributeMap()
+        public static void StartExtension()
         {
             lock (locker)
             {
-                if (map == null)
+                if (factory == null)
                 {
                     lock (locker)
                     {
-                        map = CreateMap();
+                        if (factory == null)
+                        {
+                            if (Configuration.ObjectExtenderConfig.IsTypeSpecific)
+                            {
+                                factory = AttributeFactory.Create(new TypeSpecificAttributeMap(() => new GlobalAttributeMap()));
+                            }
+                            else factory = AttributeFactory.CreateGlobal();
+                        }
                     }
                 }
-                return map;
             }
         }
+
+        static object locker = new object();
+        internal static void SetFactory(IAttributeFactory _factory)
+        {
+            lock (locker)
+            {
+                factory = _factory;
+            }
+        }
+        private static IAttributeFactory factory;
+        internal static IAttributeMap AttributeMap() => factory.GetMap();
 
         public static void RegisterAction<TKey>(this IMarkedExtendable obj, TKey key, Action action)
         {
             lock (locker)
             {
-                AttributeMap().Add(obj, key, CreateActionAttribute(key, action));
+                AttributeMap().Add(obj, key, factory.CreateActionAttribute(key, action));
             }
         }
 
@@ -38,7 +51,7 @@ namespace heitech.ObjectExpander.Extender
         {
             lock (locker)
             {
-                AttributeMap().Add(obj, key, CreateActionAttribute(key, action));
+                AttributeMap().Add(obj, key, factory.CreateActionAttribute(key, action));
             }
         }
 
@@ -46,7 +59,7 @@ namespace heitech.ObjectExpander.Extender
         {
             lock (locker)
             {
-                AttributeMap().Add(obj, key, CreateActionAttribute(key, action));
+                AttributeMap().Add(obj, key, factory.CreateActionAttribute(key, action));
             }
         }
 
@@ -61,21 +74,21 @@ namespace heitech.ObjectExpander.Extender
         {
             lock(locker)
             {
-                AttributeMap().Add(obj, key, CreateFuncAttribute<TKey, TResult>(key, func));
+                AttributeMap().Add(obj, key, factory.CreateFuncAttribute<TKey, TResult>(key, func));
             }
         }
         public static void RegisterFunc<TKey, TResult, TParam>(this IMarkedExtendable obj, TKey key, Func<TParam, TResult> func)
         {
             lock (locker)
             {
-                AttributeMap().Add(obj, key, CreateFuncAttribute(key, func));
+                AttributeMap().Add(obj, key, factory.CreateFuncAttribute(key, func));
             }
         }
         public static void RegisterFunc<TKey, TResult, TParam, TParam2>(this IMarkedExtendable obj, TKey key, Func<TResult, TParam, TParam2> func)
         {
             lock (locker)
             {
-                AttributeMap().Add(obj, key, CreateFuncAttribute(key, func));
+                AttributeMap().Add(obj, key, factory.CreateFuncAttribute(key, func));
             }
         }
 

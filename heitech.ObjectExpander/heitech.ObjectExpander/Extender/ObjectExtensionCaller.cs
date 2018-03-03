@@ -6,7 +6,7 @@ using static heitech.ObjectExpander.Extender.ObjectExtender;
 
 namespace heitech.ObjectExpander.Extender
 {
-    public static class IObjectExtensionCaller
+    public static class ObjectExtensionCaller
     {
         public static void Call<TKey>(this IMarkedExtendable obj, TKey key)
         {
@@ -39,7 +39,7 @@ namespace heitech.ObjectExpander.Extender
         public static TResult Invoke<TKey, TResult>(this IMarkedExtendable obj, TKey key)
         {
             TResult result = default(TResult);
-            InvokeOnMap(() => result = (TResult)AttributeMap().Invoke(key),
+            InvokeOnMap(() => result = (TResult)AttributeMap().Invoke(obj, key),
                 obj, key, typeof(TResult));
 
             return result;
@@ -48,14 +48,14 @@ namespace heitech.ObjectExpander.Extender
         public static TResult Invoke<TKey, TResult, TParam>(this IMarkedExtendable obj, TKey key, TParam param)
         {
             TResult result = default(TResult);
-                InvokeOnMap(() => result = (TResult)AttributeMap().Invoke(key, param),
+                InvokeOnMap(() => result = (TResult)AttributeMap().Invoke(obj, key, param),
                 obj, key, typeof(TResult), param);
             return result;
         }
 
         static void InvokeOnMap(Action _do, IMarkedExtendable obj, object key, Type returnType, params object[] parameters)
         {
-            if (AttributeMap().CanInvoke(key, returnType, parameters))
+            if (AttributeMap().CanInvoke(obj, key, returnType, parameters))
                 _do();
             else
                 if (!ObjectExtenderConfig.IgnoreException)
@@ -65,7 +65,7 @@ namespace heitech.ObjectExpander.Extender
         public static TResult Invoke<TKey, TResult, TParam, TParam2>(this IMarkedExtendable obj, TKey key, TParam param, TParam2 param2)
         {
             TResult result = default(TResult);
-            InvokeOnMap(() => result = (TResult)AttributeMap().Invoke(key, param, param2),
+            InvokeOnMap(() => result = (TResult)AttributeMap().Invoke(obj, key, param, param2),
                  obj, key, typeof(TResult), param, param2);
             return result;
         }

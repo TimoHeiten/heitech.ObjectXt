@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using heitech.ObjectExpander.Extender;
 using heitech.ObjectExpander.Interfaces;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using heitech.ObjectExpander.ExtensionMap;
-using heitech.ObjectExpander.Extender;
+using System;
 using System.Threading.Tasks;
 
 namespace heitech.ObjectExpander.Tests.Extender
@@ -16,7 +15,11 @@ namespace heitech.ObjectExpander.Tests.Extender
 
         [TestInitialize]
         public void Init()
-            => AttributeFactory.SetMap(() => map.Object);
+        {
+            var mock = new Mock<IAttributeFactory>();
+            mock.Setup(x => x.GetMap()).Returns(map.Object);
+            ObjectExtender.SetFactory(mock.Object);
+        }
 
         [TestMethod]
         public void ObjectExtender_RegisterActionDelegatesToAttributeMap()
@@ -45,8 +48,7 @@ namespace heitech.ObjectExpander.Tests.Extender
         [TestCleanup]
         public void TearDown()
         {
-            AttributeFactory.SetMap(null);
-            ObjectExtender.TestCleanup();
+            ObjectExtender.SetFactory(null);
         }
 
         [TestMethod]

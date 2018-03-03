@@ -11,19 +11,19 @@ namespace heitech.ObjectExpander.Extender
         public static void Call<TKey>(this IMarkedExtendable obj, TKey key)
         {
             var args = new IMarkedExtendable[] { };
-            InvokeOnMap(() => AttributeMap().Invoke(key, args), obj, key, null, args);
+            InvokeOnMap(() => AttributeMap().Invoke(obj, key, args), obj, key, null, args);
         }
 
         public static void Call<TKey, TParam>(this IMarkedExtendable obj, TKey key, TParam param)
         {
             var args = new object[] { param};
-            InvokeOnMap(() => AttributeMap().Invoke(key, args), obj, key, null, args);
+            InvokeOnMap(() => AttributeMap().Invoke(obj, key, args), obj, key, null, args);
         }
 
         public static void Call<TKey, TParam, TParam2>(this IMarkedExtendable obj, TKey key, TParam param, TParam2 param2)
         {
             var args = new object[] { param, param2 };
-            InvokeOnMap(() => AttributeMap().Invoke(key, args), obj, key, null, args);
+            InvokeOnMap(() => AttributeMap().Invoke(obj, key, args), obj, key, null, args);
         }
 
         static void Throw(IMarkedExtendable obj, object key) => throw new AttributeNotFoundException(obj.GetType(), key);

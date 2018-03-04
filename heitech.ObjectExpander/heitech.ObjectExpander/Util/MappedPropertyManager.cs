@@ -92,5 +92,23 @@ namespace heitech.ObjectExpander.Util
             => originType.GetField(backingFieldName, flags());
 
         public IDictionary<string, object> AllProperties() => dictionary;
+
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            if (format == "o")
+            {
+                return $"{this.GetType().Name}: Origin '{origin.ToString()}', OriginType '{originType}'";
+            }
+            else if (format =="a")
+            {
+                string s = "MappedProperties: ";
+                foreach (var item in dictionary)
+                {
+                    s += $"'key:{item.Key}, value:{item.Value.GetType().Name}'\n";
+                }
+                return s;
+            }
+            else return this.GetType().Name;
+        }
     }
 }

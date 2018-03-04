@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace heitech.ObjectExpander.Util
 {
-    public interface IMappedPropertyManager
+    public interface IMappedPropertyManager : IFormattable
     {
         object this[string name] { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿// reflection cache for obj
 
-Auto property  with lambda syntax does not work with set.
+Auto property  with lambda syntax does not work with set.!!!
 
 MappedPropertyManager implements IFormattable
 --> returns $"{key}:{value}\n" for all properties.
@@ -9,3 +9,5 @@ Config for extender:
 	AttributeMap per Typ or global (global is default)
 		--> change return type on attributefactory
 	SafeInvocation --> no exceptions on Invoke Calls
+
+Extender returns a collectionlike type that lets one iterate over the attached attributes.

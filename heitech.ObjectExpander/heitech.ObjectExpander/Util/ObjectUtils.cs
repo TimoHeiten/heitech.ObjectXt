@@ -34,8 +34,15 @@ namespace heitech.ObjectExpander.Util
             PropertyInfo first = infos.FirstOrDefault(x => x.Name == name);
             if (first != null)
             {
-                value = first.GetValue(obj);
-                isSuccess = true;
+                try
+                {
+                    value = first.GetValue(obj);
+                    isSuccess = true;
+                }
+                catch (TargetParameterCountException exception)
+                {
+                    isSuccess = false;
+                }
             }
             return isSuccess;
         }

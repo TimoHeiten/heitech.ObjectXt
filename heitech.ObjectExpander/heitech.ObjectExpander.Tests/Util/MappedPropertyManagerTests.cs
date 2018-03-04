@@ -169,6 +169,40 @@ namespace heitech.ObjectExpander.Tests.Util
             Assert.ThrowsException<NullReferenceException>(() => propManager.TrySetProperty(key, "next"));
         }
 
+        [TestMethod]
+        public void MappedPropertyManager_ToString_G_ReturnsJustTypeName()
+        {
+            propManager = new MapperSpy(new Item());
+            Assert.AreEqual(typeof(MapperSpy).Name, propManager.ToString("g", null));
+        }
+
+        [TestMethod]
+        public void MappedPropertyManager_ToString_A_ReturnsAllItemsListedAsKeyValuePair()
+        {
+            propManager = new MapperSpy(new Item());
+            string expected = "MappedProperties: 'key:Property, value:Object'\n";
+            Assert.AreEqual(expected, propManager.ToString("a", null));
+        }
+
+        [TestMethod]
+        public void MappedPropertyManager_ToString_O_ReturnsOrigin()
+        {
+            propManager = new MapperSpy("abc");
+            string expected = "MapperSpy: Origin 'abc', OriginType 'System.String'";
+            Assert.AreEqual(expected, propManager.ToString("o", null));
+        }
+
+        [TestMethod]
+        public void MappedPropertyManager_ToString_NoArgsReturnsTypeName()
+        {
+            Assert.AreEqual(typeof(MapperSpy).Name, propManager.ToString("was falsches", null));
+        }
+
+        private class Item
+        {
+            internal object Property { get; } = new object();
+        }
+
         private class MapperSpy : MappedPropertyManager
         {
             internal MapperSpy(object obj) 

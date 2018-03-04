@@ -102,6 +102,13 @@ namespace heitech.ObjectExpander.Tests.Util
             Assert.IsTrue(typeof(PropertyTester).IsUpCastable(typeof(AnotherTester)));
         }
 
+        [TestMethod]
+        public void ObjectUtils_TryGetParameterCatchesTargetParameterCountException()
+        {
+            string _s = "abc";
+            _s.AllProperties();
+        }
+
         private class PropertyTester : IPropTester
         {
             public int Number { get; set; }

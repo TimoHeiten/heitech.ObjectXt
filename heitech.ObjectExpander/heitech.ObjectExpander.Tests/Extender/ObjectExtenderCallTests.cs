@@ -71,6 +71,30 @@ namespace heitech.ObjectExpander.Tests.Extender
             Assert.ThrowsException<NotImplementedException>(() => extendable.InvokeAsync<string, int>("key"));
         }
 
+        [TestMethod]
+        public void ExtensionCaller_EachMethodCallsInvokeOnMapWithCorrectParameters()
+        {
+            map.CanInvokeIt = true;
+            AssertInvoke(() => extendable.Call("key"), "key");
+            AssertInvoke(() => extendable.Call("key", 42), "key", null, new object[] { 42 });
+            AssertInvoke(() => extendable.Call("key", 42, 43), "key", null, new object[] { 42, 42 });
+
+            map.Result = 112;
+            AssertInvoke(() => extendable.Invoke<string, int>("key"),"key", typeof(int));
+            AssertInvoke(() => extendable.Invoke<string, int, int>("key", 42), "key", typeof(int), new object[] { 42 });
+            AssertInvoke(() => extendable.Invoke<string, int, int,int>("key", 42, 43), "key", typeof(int), new object[] { 42, 42 });
+
+        }
+
+        private void AssertInvoke(Action call, string key, Type type = null, params object[] parameters)
+        {
+            call();
+            Assert.AreEqual(key, map.Input.key);
+            Assert.AreEqual(type, map.Input.expectedType);
+            Assert.AreEqual(parameters.Length, map.Input.parameters.Length);
+            Assert.AreSame(extendable, map.Input.input);
+        }
+
         private class AttributeMapMock : IAttributeMap
         {
             public void Add<TKey>(object extended, TKey key, IExtensionAttribute func)
@@ -79,7 +103,12 @@ namespace heitech.ObjectExpander.Tests.Extender
             }
             internal bool CanInvokeIt { get; set; }
             public bool CanInvoke<TKey>(object extended, TKey key, Type expectedReturnType, params object[] parameters)
-                => CanInvokeIt;
+            {
+                Input = (extended, key, expectedReturnType, parameters);
+                return CanInvokeIt;
+            }
+
+            internal (object input, object key, Type expectedType, object[] parameters) Input { get; private set; }
 
             public bool HasKey<TKey>(object extended, TKey key) => false;
 

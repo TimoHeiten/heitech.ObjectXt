@@ -9,6 +9,7 @@ namespace heitech.ObjectExpander.Cli
     {
         static void Main(string[] args)
         {
+            Configuration.ObjectExtenderConfig.ConfigureTypeSpecific();
             ObjectExtender.StartExtension();
 
             var obj = new MarkedObject();

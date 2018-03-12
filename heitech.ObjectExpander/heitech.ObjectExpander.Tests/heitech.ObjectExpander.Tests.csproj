@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttributeExtension\AttributeMapTests.cs" />
     <Compile Include="Extender\ObjectExtenderCallTests.cs" />
     <Compile Include="Extender\ObjectExtenderTests.cs" />
     <Compile Include="ExtensionMap\AttributeMapTests.cs" />

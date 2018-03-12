@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="heitech.LinqXt, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\heitech.LinqXt.1.0.0\lib\netstandard2.0\heitech.LinqXt.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttributeExtension\AttributeExtender.cs" />
+    <Compile Include="AttributeExtension\AttributeExtenderFactory.cs" />
     <Compile Include="Configuration\ObjectExtenderConfig.cs" />
     <Compile Include="Extender\ObjectExtender.cs" />
     <Compile Include="Extender\ObjectExtensionCaller.cs" />
@@ -51,6 +56,7 @@
     <Compile Include="ExtensionMap\Attributes\FuncAttribute.cs" />
     <Compile Include="ExtensionMap\TypeSpecificAttributeMap.cs" />
     <Compile Include="Extender\IMarkedExtendable.cs" />
+    <Compile Include="Interfaces\IAttributeExtender.cs" />
     <Compile Include="Interfaces\IAttributeMap.cs" />
     <Compile Include="Interfaces\IAttriubteFactory.cs" />
     <Compile Include="Interfaces\IExtensionAttribute.cs" />
@@ -59,7 +65,9 @@
     <Compile Include="Util\MappedPropertyManager.cs" />
     <Compile Include="Util\ObjectUtils.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Ideas_Todos.txt" />
   </ItemGroup>

@@ -24,7 +24,9 @@ namespace heitech.ObjectExpander.ExtensionMap
             }
             else
             {
-                dictionary.Add(type, factory());
+                IAttributeMap nested = factory();
+                dictionary.Add(type, nested);
+                nested.Add(extended, key, func);
             }
         }
 

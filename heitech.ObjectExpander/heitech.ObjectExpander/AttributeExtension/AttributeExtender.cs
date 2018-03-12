@@ -1,9 +1,7 @@
-﻿using System;
+﻿using heitech.ObjectExpander.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using heitech.ObjectExpander.Interfaces;
 
 namespace heitech.ObjectExpander.AttributeExtension
 {
@@ -11,10 +9,16 @@ namespace heitech.ObjectExpander.AttributeExtension
     {
         protected Dictionary<T, object> Attributes { get; } = new Dictionary<T, object>();
 
-        public object this[string attributename]
+        public object this[T key]
         {
-            get { return null; }
-            set { }
+            get => Attributes[key];
+            set
+            {
+                if (Attributes.ContainsKey(key))
+                    Attributes[key] = value;
+                else
+                    Add(key, value);
+            }
         }
 
         public void Add(T key, object obj)
@@ -33,31 +37,44 @@ namespace heitech.ObjectExpander.AttributeExtension
                 throw new KeyNotFoundException();
         }
 
-        public bool TryGetAttribute<V>(T key, out V val)
+        public bool TryGetAttribute<A>(T key, out A attribute)
         {
             bool isSuccess = false;
-            val = default(V);
+            attribute = default(A);
 
-
-
+            if (Attributes.TryGetValue(key, out object v)
+                && v.GetType() == typeof(A))
+            {
+                attribute = (A)v;
+                isSuccess = true;
+            }
             return isSuccess;
         }
 
-        public bool HasKey(T key)
+        public bool HasAttribute(T key)
+            => Attributes.ContainsKey(key);
+
+        public (bool hasValue, T key, A attribute) GetKeyAttributePair<A>(T key)
         {
-            return false;
+            if (Attributes.TryGetValue(key, out object attribute) && attribute.GetType() == typeof(A))
+                return (true, key, (A)attribute);
+            else 
+                return (false, key, default(A));
         }
 
-        public (bool hasValue, T key, V value) GetKeyValue<V>(T key)
+        public bool HasAttributeOfType<A>(out T key)
         {
-            return (false, key, default(V));
+            bool isSuccess = false;
+            Type type_of_v = typeof(A);
+            key = default(T);
+            var hasAny = Attributes.FirstOrDefault(x => x.Value.GetType() == type_of_v);
+
+            if (!hasAny.Equals(default(KeyValuePair<T, object>)))
+            {
+                key = hasAny.Key;
+                isSuccess = true;
+            }
+            return isSuccess;
         }
-
-        public bool HasAttributeOfType<V>()
-        {
-            return false;
-        }
-
-
     }
 }

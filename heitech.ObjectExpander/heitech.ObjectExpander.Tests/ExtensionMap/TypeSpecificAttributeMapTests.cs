@@ -2,10 +2,6 @@
 using heitech.ObjectExpander.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace heitech.ObjectExpander.Tests.ExtensionMap
 {
@@ -17,7 +13,7 @@ namespace heitech.ObjectExpander.Tests.ExtensionMap
         private IAttributeMap Factory()
         {
             wasCreated = true;
-            return new AttrMap();
+            return new GlobalAttributeMap();
         }
 
         [TestInitialize]
@@ -48,6 +44,27 @@ namespace heitech.ObjectExpander.Tests.ExtensionMap
             Assert.IsFalse(wasCreated);
         }
 
+        [TestMethod]
+        public void TypeSpecific_CanInvokeReturnsTrueIfKeyIsFound()
+        {
+            map.Add("string", "key", new AnyAttribute { _Can = true });
+            Assert.IsTrue(map.CanInvoke("string", "key", null));
+        }
+
+        [TestMethod]
+        public void TypeSpecific_CanInvokeReturnsTrue_ForAllRegistered_withType()
+        {
+            map.Add("string", "key1", new AnyAttribute { _Can = true });
+            map.Add("string", "key2", new AnyAttribute { _Can = true });
+
+            Assert.IsTrue(map.CanInvoke("string", "key1", null));
+            Assert.IsTrue(map.CanInvoke("string", "key2", null));
+        }
+
+        [TestMethod]
+        public void TypeSpecific_CanInvoke_ReturnsFalse_IfKeyIsNotFound()
+            => Assert.IsFalse(map.CanInvoke("string", "key", null));
+
         private class Spy : TypeSpecificAttributeMap
         {
             internal Spy(Func<IAttributeMap> factory) : base(factory)
@@ -60,10 +77,9 @@ namespace heitech.ObjectExpander.Tests.ExtensionMap
 
         private class AnyAttribute : IExtensionAttribute
         {
+            internal bool _Can { get; set; }
             public bool CanInvoke<TKey>(TKey key, Type expectedReturnType = null, params object[] parameters)
-            {
-                throw new NotImplementedException();
-            }
+                => _Can;
 
             public object Invoke(params object[] parameters)
             {

@@ -1,5 +1,6 @@
 ﻿using heitech.ObjectExpander.Extender;
 using heitech.ObjectExpander.ExtensionMap;
+using heitech.ObjectExpander.Interfaces;
 using heitech.ObjectExpander.Util;
 using System;
 
@@ -9,6 +10,11 @@ namespace heitech.ObjectExpander.Cli
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("AttributeExtension:");
+            Demonstrate_AttributeExtension();
+            Console.WriteLine("next up is ObjectExtension" + Environment.NewLine);
+            Console.ReadKey();
+
             Configuration.ObjectExtenderConfig.ConfigureTypeSpecific();
             ObjectExtender.StartExtension();
 
@@ -48,10 +54,37 @@ namespace heitech.ObjectExpander.Cli
             Console.ReadLine();
         }
 
+        private static void Demonstrate_AttributeExtension()
+        {
+            IAttributeExtender<string> attributes = AttributeExtension.AttributeExtenderFactory.Create<string>();
+            Console.WriteLine("register all for variable called 'attributes'");
+
+            attributes.Add("key", 42);
+            if (!attributes.TryGetAttribute("key", out string s))
+                MethodSignature("attributes.TryGetAttribute('key', out string s)", "key with type string not found");
+            if (attributes.TryGetAttribute("key", out int _42))
+                MethodSignature("attributes.TryGetAttribute('key', out int _42)", $"key with type int found: {_42}");
+
+            attributes["key2"] = "on snd key";
+            MethodSignature("attributes['key2']", $"key2: {attributes["key2"]}");
+            attributes["key2"] = "on snd key with overwrite";
+            MethodSignature("attributes['key2']", $"key2_overwrite: {attributes["key2"]}");
+
+            MethodSignature("attributes.HasAttribute('key2')", "hasAttribute key2 : " + attributes.HasAttribute("key2"));
+            (bool b, string key, string attr) tuple = attributes.GetKeyAttributePair<string>("key");
+            MethodSignature("attributes.GetKeyAttributePair<string>('key')", $"From tuple: ({tuple.b}, {tuple.key}, {tuple.attr}");
+
+            bool hasAttrType = attributes.HasAttributeOfType<int>(out string key);
+            MethodSignature("attributes.HasAttributeOfType<int>(out string key)", $"has attribute of type int: {hasAttrType} : with key {key}");
+        }
+
+        private static void MethodSignature(string methName, string text)
+            => Console.WriteLine($"from: '{methName}', '{text}'");
+
         /// <summary>
         /// (sloppy coded) integration test
         /// </summary>
-        private static void TestPropertyMapper(MarkedObject obj)
+            private static void TestPropertyMapper(MarkedObject obj)
         {
             var mapper = obj.GeneratePropertyManager();
             if (mapper.TryGetProperty(nameof(MarkedObject.No), out int val))

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using heitech.ObjectExpander.AttributeExtension;
+﻿using heitech.ObjectExpander.AttributeExtension;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
 
 namespace heitech.ObjectExpander.Tests.AttributeExtension
 {
@@ -13,7 +10,6 @@ namespace heitech.ObjectExpander.Tests.AttributeExtension
     {
         private readonly Spy map = new Spy();
 
-        // AttributeMap_
         [TestMethod]
         public void AttributeMap_Add_ExtendsItem_InMap_ByKeyAndValue()
         {
@@ -46,14 +42,13 @@ namespace heitech.ObjectExpander.Tests.AttributeExtension
 
         [TestMethod]
         public void AttributeMap_TryGetAttribute_ReturnsFalse_IfKeyIsNotRegistered()
-        {
-
-        }
+            => Assert.IsFalse(map.TryGetAttribute("key", out string val));
 
         [TestMethod]
         public void AttributeMap_TryGetAttribute_ReturnsTrue_IfKeyIsRegistered()
         {
-
+            map.Add("key", "string");
+            Assert.IsTrue(map.TryGetAttribute("key", out string s));
         }
 
         [TestMethod]
@@ -76,25 +71,26 @@ namespace heitech.ObjectExpander.Tests.AttributeExtension
         }
 
         [TestMethod]
-        public void AttributeMap_IsRegisteredKey_ReturnsFalse_IfKeyIsNotRegistered()
-                => Assert.IsFalse(map.HasKey("key"));
+        public void AttributeMap_HasKey_ReturnsFalse_IfKeyIsNotRegistered()
+                => Assert.IsFalse(map.HasAttribute("key"));
 
         [TestMethod]
-        public void AttributeMap_IsRegisteredKey_ReturnsTrue_IfKeyIsRegistered()
+        public void AttributeMap_HasKey_ReturnsTrue_IfKeyIsRegistered()
         {
             map.Add("key", new object());
-            Assert.IsTrue(map.HasKey("key"));
+            Assert.IsTrue(map.HasAttribute("key"));
         }
 
         [TestMethod]
         public void AttributeMap_HasTypeAttribute_ReturnsFalse_IfNoTypeIsFound()
-            => Assert.IsFalse(map.HasAttributeOfType<string>());
+            => Assert.IsFalse(map.HasAttributeOfType<string>(out string key));
 
         [TestMethod]
-        public void AttributeMap_HasTypeAttribute_ReturnsTrue_ifTypeIsFound_AndReturnsTupleOfKeysAndValues()
+        public void AttributeMap_HasTypeAttribute_ReturnsTrue_ifTypeIsFound_AndReturnsOutKey()
         {
             map.Add("key", "attribute");
-            Assert.IsTrue(map.HasAttributeOfType<string>());
+            Assert.IsTrue(map.HasAttributeOfType<string>(out string key));
+            Assert.AreEqual("key", key);
         }
 
         [TestMethod]
@@ -124,7 +120,25 @@ namespace heitech.ObjectExpander.Tests.AttributeExtension
             map.Add("key", "attribute");
             map["key"] = "otherAttr";
 
-            Assert.AreEqual("ohterAttr", map["key"]);
+            Assert.AreEqual("otherAttr", map["key"]);
+        }
+
+        [TestMethod]
+        public void AttributeMap_GetKeyAttributeMap_returnsTupleWithBoolean_IsFalse_IfKeyIsNotThere()
+        {
+            (bool b, string key, string attr) result = map.GetKeyAttributePair<string>("key");
+            Assert.IsFalse(result.b);
+            Assert.IsNull(result.attr);
+        }
+
+        [TestMethod]
+        public void AttributeMap_GetKeyAttributeMap_returnsTupleWithBoolean_IsTrue_IfKeyIsThere()
+        {
+            map.Add("key", "result");
+            (bool b, string key, string attr) result = map.GetKeyAttributePair<string>("key");
+            Assert.IsTrue(result.b);
+            Assert.IsNotNull(result.attr);
+            Assert.AreEqual("result", result.attr);
         }
     }
 

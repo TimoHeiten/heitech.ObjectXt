@@ -6,6 +6,5 @@ namespace heitech.ObjectExpander.AttributeExtension
     {
         public static IAttributeExtender<K> Create<K>()
             => new AttributeExtender<K>();
-
     }
 }

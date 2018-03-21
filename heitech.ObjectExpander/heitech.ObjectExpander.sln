@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "heitech.ObjectExpander", "heitech.ObjectExpander\heitech.ObjectExpander.csproj", "{47A0033A-785B-425A-B9AE-BA502D6685D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "heitech.ObjectXt", "heitech.ObjectXt\heitech.ObjectXt.csproj", "{BB9B0EAD-2BE9-43B5-B9FE-0A0366BDD444}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "heitech.ObjectExpander.Tests", "heitech.ObjectExpander.Tests\heitech.ObjectExpander.Tests.csproj", "{4C522978-2EB3-42B7-8474-925109F420DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "heitech.ObjectXt.Tests", "heitech.ObjectXt.Tests\heitech.ObjectXt.Tests.csproj", "{203B4EA9-5593-41F3-A014-54DF3743D775}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "heitech.ObjectExpander.Cli", "heitech.ObjectExpander.Cli\heitech.ObjectExpander.Cli.csproj", "{969BA809-42E1-48E1-86A3-12B0A6B89F6A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "heitech.ObjectXt.Cli", "heitech.ObjectXt.Cli\heitech.ObjectXt.Cli.csproj", "{F6B5C601-FE51-44DB-AD19-8D47023B04C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,18 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{47A0033A-785B-425A-B9AE-BA502D6685D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{47A0033A-785B-425A-B9AE-BA502D6685D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{47A0033A-785B-425A-B9AE-BA502D6685D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{47A0033A-785B-425A-B9AE-BA502D6685D1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4C522978-2EB3-42B7-8474-925109F420DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4C522978-2EB3-42B7-8474-925109F420DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4C522978-2EB3-42B7-8474-925109F420DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4C522978-2EB3-42B7-8474-925109F420DE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{969BA809-42E1-48E1-86A3-12B0A6B89F6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{969BA809-42E1-48E1-86A3-12B0A6B89F6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{969BA809-42E1-48E1-86A3-12B0A6B89F6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{969BA809-42E1-48E1-86A3-12B0A6B89F6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB9B0EAD-2BE9-43B5-B9FE-0A0366BDD444}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB9B0EAD-2BE9-43B5-B9FE-0A0366BDD444}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB9B0EAD-2BE9-43B5-B9FE-0A0366BDD444}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB9B0EAD-2BE9-43B5-B9FE-0A0366BDD444}.Release|Any CPU.Build.0 = Release|Any CPU
+		{203B4EA9-5593-41F3-A014-54DF3743D775}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{203B4EA9-5593-41F3-A014-54DF3743D775}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{203B4EA9-5593-41F3-A014-54DF3743D775}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{203B4EA9-5593-41F3-A014-54DF3743D775}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6B5C601-FE51-44DB-AD19-8D47023B04C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6B5C601-FE51-44DB-AD19-8D47023B04C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6B5C601-FE51-44DB-AD19-8D47023B04C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6B5C601-FE51-44DB-AD19-8D47023B04C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

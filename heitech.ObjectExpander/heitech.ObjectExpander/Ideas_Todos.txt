@@ -1,8 +1,0 @@
-﻿Auto property  with lambda syntax does not work with set.!!!
-
-MappedPropertyManager AllProperties test on all builtin types
-
-Extender returns a collectionlike type that lets one iterate over the attached attributes.
-
-objectutils
-	ReflectionMethods with cache for object.

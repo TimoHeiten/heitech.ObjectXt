@@ -6,5 +6,8 @@ namespace heitech.ObjectXt.AttributeExtension
     {
         public static IAttributeExtender<K> Create<K>()
             => new AttributeExtender<K>();
+
+        public static IAttributeExtender<K> CreateConcurrent<K>()
+            => new ConcurrentAttributeExtender<K>();
     }
 }

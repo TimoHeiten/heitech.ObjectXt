@@ -2,13 +2,19 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using heitech.ObjectXt.Interface;
 
 namespace heitech.ObjectXt.Tests.AttributeExtension
 {
     [TestClass]
     public class AttributeMapTests
     {
-        private readonly Spy map = new Spy();
+        private Spy map;
+        [TestInitialize]
+        public void Init()
+        {
+            map = new Spy(Factory);
+        }
 
         [TestMethod]
         public void AttributeMap_Add_ExtendsItem_InMap_ByKeyAndValue()
@@ -140,10 +146,53 @@ namespace heitech.ObjectXt.Tests.AttributeExtension
             Assert.IsNotNull(result.attr);
             Assert.AreEqual("result", result.attr);
         }
+
+        [TestMethod]
+        public void AttributeMap_Equals_otherMap_if_all_AttributeExtenderItems_have_one_Equal_Representation()
+        {
+            var other = new AttributeExtender<string>(Factory)
+            {
+                ["onlyKey"] = false
+            };
+            Assert.IsFalse(map.Equals(other));
+
+            map["onlyKey"] = 42;
+            Assert.IsFalse(map.Equals(other));
+
+            map["onlyKey"] = true;
+            other["onlyKey"] = true;
+
+            Assert.IsTrue(map.Equals(other));
+        }
+
+        private IAttributeExtenderItem<string> Factory(string s, object shouldBeEqual)
+            => new AttributeExtenderItem<string>(s, shouldBeEqual);
     }
 
     internal class Spy : AttributeExtender<string>
     {
+        internal Spy(Func<string, object, IAttributeExtenderItem<string>> factory) 
+            : base(factory)
+        { }
+
         internal int CountItems => this.Attributes.Count;
+    }
+
+    internal class AttibuteExtenderItemStub : IAttributeExtenderItem<string>
+    {
+        public string Key => "key";
+        public object Value => 42;
+
+        internal bool ShouldBeEqual;
+        public bool Equals(IAttributeExtenderItem<string> other)
+            => ShouldBeEqual;
+
+        public bool IsValueOfType<V>()
+            => false;
+
+        public bool TryGetValue<V>(out V value)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

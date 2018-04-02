@@ -1,9 +1,15 @@
 ﻿using System;
+using heitech.ObjectXt.Interface;
+
 namespace heitech.ObjectXt.AttributeExtension
 {
     public class ConcurrentAttributeExtender<T> : AttributeExtenderBase<T>
     {
         private readonly object locker = new object();
+
+        internal ConcurrentAttributeExtender(Func<T, object, IAttributeExtenderItem<T>> factory) 
+            : base(factory)
+        { }
 
         public override void Add(T key, object obj)
         {

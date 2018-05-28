@@ -17,4 +17,7 @@
     <ProjectReference Include="..\heitech.ObjectXt\heitech.ObjectXt.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SafeGet\" />
+  </ItemGroup>
 </Project>

@@ -39,7 +39,7 @@ namespace heitech.ObjectXt.Util
                     value = first.GetValue(obj);
                     isSuccess = true;
                 }
-                catch (TargetParameterCountException exception)
+                catch (TargetParameterCountException)
                 {
                     isSuccess = false;
                 }

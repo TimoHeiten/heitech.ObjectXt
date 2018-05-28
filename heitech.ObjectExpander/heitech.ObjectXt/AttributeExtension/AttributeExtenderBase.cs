@@ -2,12 +2,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using heitech.ObjectXt.Interface;
+using System.Collections;
+using System.Diagnostics;
 
 namespace heitech.ObjectXt.AttributeExtension
 {
     public abstract class AttributeExtenderBase<T> : IAttributeExtender<T>
     {
         protected Dictionary<T, object> Attributes { get; } = new Dictionary<T, object>();
+        protected Func<T, object, IAttributeExtenderItem<T>> Factory { get; }
+
+        protected AttributeExtenderBase(Func<T, object, IAttributeExtenderItem<T>> factory)
+        {
+            this.Factory = factory;
+        }
 
         public virtual object this[T key]
         {
@@ -76,5 +85,34 @@ namespace heitech.ObjectXt.AttributeExtension
             }
             return isSuccess;
         }
+
+        public virtual IEnumerator<IAttributeExtenderItem<T>> GetEnumerator()
+        {
+            foreach (var item in Attributes)
+                yield return Factory(item.Key, item.Value);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Equals(IAttributeExtender<T> other)
+        {
+            if (!SameCount(other))
+                return false;
+
+            foreach (IAttributeExtenderItem<T> item in other)
+                if (!EqualsAny(item))
+                    return false;
+
+            return true;
+        }
+
+        private bool EqualsAny(IAttributeExtenderItem<T> item)
+            => this.Any(x => x.Equals(item));
+
+        private bool SameCount(IAttributeExtender<T> other)
+            => other.Count() == this.Attributes.Count;
     }
 }

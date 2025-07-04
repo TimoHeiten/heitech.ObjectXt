@@ -1,9 +1,9 @@
-﻿using heitech.ObjectXt.ExtensionMap;
-using heitech.ObjectXt.Interfaces;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using heitech.ObjectXt.ExtensionMap;
+using heitech.ObjectXt.Interfaces;
 
-namespace heitech.ObjectXt.Extender
+namespace heitech.ObjectXt
 {
     public static class ObjectExtender
     {
@@ -11,19 +11,21 @@ namespace heitech.ObjectXt.Extender
         {
             lock (locker)
             {
-                if (factory == null)
+                if (factory != null)
+                    return;
+
+                lock (locker)
                 {
-                    lock (locker)
+                    if (factory != null)
+                        return;
+                    
+                    if (Configuration.ObjectExtenderConfig.IsTypeSpecific)
                     {
-                        if (factory == null)
-                        {
-                            if (Configuration.ObjectExtenderConfig.IsTypeSpecific)
-                            {
-                                factory = AttributeFactory.Create(new TypeSpecificAttributeMap(() => new GlobalAttributeMap()));
-                            }
-                            else factory = AttributeFactory.CreateGlobal();
-                        }
+                        factory = AttributeFactory.Create(new TypeSpecificAttributeMap(() => new GlobalAttributeMap()));
+                        return;
                     }
+                    
+                    factory = AttributeFactory.CreateGlobal();
                 }
             }
         }

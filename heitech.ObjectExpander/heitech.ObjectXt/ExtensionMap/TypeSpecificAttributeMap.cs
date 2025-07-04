@@ -10,14 +10,11 @@ namespace heitech.ObjectXt.ExtensionMap
         protected Dictionary<Type, IAttributeMap> dictionary = new Dictionary<Type, IAttributeMap>();
 
         internal TypeSpecificAttributeMap(Func<IAttributeMap> factory)
-        {
-            this.factory = factory;
-        }
+            => this.factory = factory;
 
         public void Add<TKey>(object extended, TKey key, IExtensionAttribute func)
         {
-            Type type = extended.GetType();
-
+            var type = extended.GetType();
             if (dictionary.TryGetValue(type, out IAttributeMap map))
             {
                 map.Add(extended, key, func);
@@ -33,22 +30,28 @@ namespace heitech.ObjectXt.ExtensionMap
         public bool CanInvoke<TKey>(object extended, TKey key, Type expectedReturnType, params object[] parameters)
         {
             Type type = extended.GetType();
-            if (dictionary.TryGetValue(type, out IAttributeMap map)) return map.CanInvoke(extended, key, expectedReturnType, parameters);
-            else return false;
+            if (dictionary.TryGetValue(type, out IAttributeMap map)) 
+                return map.CanInvoke(extended, key, expectedReturnType, parameters);
+            
+            return false;
         }
 
         public bool HasKey<TKey>(object extended, TKey key)
         {
             Type type = extended.GetType();
-            if (dictionary.TryGetValue(type, out IAttributeMap map)) return map.HasKey(extended, key);
-            else return false;
+            if (dictionary.TryGetValue(type, out IAttributeMap map)) 
+                return map.HasKey(extended, key);
+            
+            return false;
         }
 
         public object Invoke<TKey>(object extended, TKey key, params object[] parameters)
         {
-            Type type = extended.GetType();
-            if (dictionary.TryGetValue(type, out IAttributeMap map)) return map.Invoke(extended, key, parameters);
-            else throw new AttributeNotFoundException($"key on {extended.GetType().Name} not found");
+            var type = extended.GetType();
+            if (dictionary.TryGetValue(type, out IAttributeMap map)) 
+                return map.Invoke(extended, key, parameters);
+            
+            throw new AttributeNotFoundException($"key on {extended.GetType().Name} not found");
         }
     }
 }

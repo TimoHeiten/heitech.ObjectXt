@@ -2,13 +2,13 @@
 
 namespace heitech.ObjectXt.ExtensionMap.Attributes
 {
-    internal class ActionAttribute : ExtensionAttributeBase
+    internal sealed class ActionAttribute : ExtensionAttributeBase
     {
         Action invokeable;
         internal ActionAttribute(object key, Action invokable) 
             : base(key, null, new Type[] { })
         {
-            this.invokeable = invokable;
+            invokeable = invokable;
         }
 
         public override object Invoke(params object[] parameters)

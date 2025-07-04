@@ -2,7 +2,7 @@
 
 namespace heitech.ObjectXt.ExtensionMap.Attributes
 {
-    internal class FuncAttribute<TResult> : ExtensionAttributeBase
+    internal sealed class FuncAttribute<TResult> : ExtensionAttributeBase
     {
         Func<TResult> func;
         internal FuncAttribute(object key, Func<TResult> func) 

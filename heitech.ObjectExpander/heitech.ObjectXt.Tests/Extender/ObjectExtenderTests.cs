@@ -1,5 +1,4 @@
-﻿using heitech.ObjectXt.Extender;
-using heitech.ObjectXt.Interfaces;
+﻿using heitech.ObjectXt.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;

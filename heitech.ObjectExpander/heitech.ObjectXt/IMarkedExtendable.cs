@@ -1,4 +1,4 @@
-﻿namespace heitech.ObjectXt.Extender
+﻿namespace heitech.ObjectXt
 {
     /// <summary>
     /// only a Marker for extensibility

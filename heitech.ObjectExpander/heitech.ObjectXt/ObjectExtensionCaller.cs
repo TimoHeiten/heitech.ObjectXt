@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using heitech.ObjectXt.Configuration;
 using heitech.ObjectXt.ExtensionMap;
-using static heitech.ObjectXt.Extender.ObjectExtender;
+using static heitech.ObjectXt.ObjectExtender;
 
-namespace heitech.ObjectXt.Extender
+namespace heitech.ObjectXt
 {
     public static class ObjectExtensionCaller
     {
@@ -56,17 +56,21 @@ namespace heitech.ObjectXt.Extender
         static void InvokeOnMap(Action _do, IMarkedExtendable obj, object key, Type returnType, params object[] parameters)
         {
             if (AttributeMap().CanInvoke(obj, key, returnType, parameters))
+            {
                 _do();
-            else
-                if (!ObjectExtenderConfig.IgnoreException)
-                    Throw(obj, key);
+                return;
+            }
+            
+            if (!ObjectExtenderConfig.IgnoreException)
+                Throw(obj, key);
         }
 
         public static TResult Invoke<TKey, TResult, TParam, TParam2>(this IMarkedExtendable obj, TKey key, TParam param, TParam2 param2)
         {
-            TResult result = default(TResult);
+            var result = default(TResult);
             InvokeOnMap(() => result = (TResult)AttributeMap().Invoke(obj, key, param, param2),
                  obj, key, typeof(TResult), param, param2);
+            
             return result;
         }
 

@@ -7,11 +7,8 @@ namespace heitech.ObjectXt.ExtensionMap
     internal class AttributeFactory : IAttributeFactory
     {
         private readonly IAttributeMap map;
-
         private AttributeFactory(IAttributeMap map)
-        {
-            this.map = map;
-        }
+            => this.map = map;
 
         public IAttributeMap GetMap() => map;
 

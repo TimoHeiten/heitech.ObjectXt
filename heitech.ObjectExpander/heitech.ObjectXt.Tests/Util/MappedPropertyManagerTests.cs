@@ -136,8 +136,8 @@ namespace heitech.ObjectXt.Tests.Util
         [TestMethod]
         public void MappedPropertyManager_WorksWithStaticProperty()
         {
-            string name = nameof(PropertyClass.AnyStatic);
-            string expected = "abcaffeschnee";
+            var name = nameof(PropertyClass.AnyStatic);
+            var expected = "abcaffeschnee";
             Assert.IsTrue(propManager.TrySetProperty(name, expected));
             Assert.IsTrue(propManager.TryGetProperty(name, out string s));
 
@@ -207,8 +207,7 @@ namespace heitech.ObjectXt.Tests.Util
         {
             internal MapperSpy(object obj) 
                 : base(obj)
-            {
-            }
+            { }
 
             internal object Origin => this.origin;
         }
@@ -220,7 +219,7 @@ namespace heitech.ObjectXt.Tests.Util
 
             internal string SomeText { get; } = "internaltext";
 
-            public static string AnyStatic { get; } = "start";
+            public static string AnyStatic { get; set; } = "start";
             internal string AnyInternal { get; }
 
             public IPropertyClass Nested { get; }

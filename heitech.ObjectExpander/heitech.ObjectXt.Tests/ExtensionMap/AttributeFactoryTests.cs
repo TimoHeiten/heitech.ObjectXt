@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using heitech.ObjectXt.ExtensionMap;
 using heitech.ObjectXt.Interfaces;
 using heitech.ObjectXt.ExtensionMap.Attributes;
+using heitech.ObjectXt.Interface;
 using Moq;
 
 namespace heitech.ObjectXt.Tests.ExtensionMap

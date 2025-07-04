@@ -15,7 +15,7 @@ namespace heitech.ObjectXt.Cli
             Console.ReadKey();
 
             Configuration.ObjectExtenderConfig.ConfigureTypeSpecific();
-            ObjectExtender.StartExtension();
+            ObjectExtender.Entry();
 
             var obj = new MarkedObject();
 
@@ -93,7 +93,7 @@ namespace heitech.ObjectXt.Cli
                 Console.WriteLine("after it was set: " + obj.No);
             }
 
-            string name = nameof(MarkedObject.IntNo);
+            var name = nameof(MarkedObject.IntNo);
             if (mapper.TryGetProperty(name, out val))
             {
                 Console.WriteLine(val + " 'Internal' number initially (should be zero)");

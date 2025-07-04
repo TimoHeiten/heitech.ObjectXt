@@ -1,5 +1,7 @@
 ﻿using System;
+using heitech.ObjectXt.Configuration;
 using heitech.ObjectXt.ExtensionMap;
+using heitech.ObjectXt.Interface;
 using heitech.ObjectXt.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -10,8 +12,8 @@ namespace heitech.ObjectXt.Tests.Extender
     public class ObjectExtenderCallTests
     {
         IMarkedExtendable extendable = new MarkedObject();
-        readonly AttributeMapMock map = new AttributeMapMock();
-        readonly Mock<IAttributeFactory> factory = new Mock<IAttributeFactory>();
+        readonly AttributeMapMock map = new();
+        readonly Mock<IAttributeFactory> factory = new();
 
         [TestInitialize]
         public void Init()
@@ -29,6 +31,7 @@ namespace heitech.ObjectXt.Tests.Extender
         [TestMethod]
         public void ExtensionCaller_CallNotRegisteredThrowsattributeNotFoundException()
         {
+            ObjectExtenderConfig.IgnoreExceptions(false);
             Assert.ThrowsException<AttributeNotFoundException>(() => extendable.Call("key"));
             Assert.ThrowsException<AttributeNotFoundException>(() => extendable.Call("key",42));
             Assert.ThrowsException<AttributeNotFoundException>(() => extendable.Call("key",42,43));

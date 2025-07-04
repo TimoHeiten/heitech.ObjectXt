@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using heitech.ObjectXt.Interface;
 
 namespace heitech.ObjectXt.ExtensionMap
 {
@@ -28,20 +29,19 @@ namespace heitech.ObjectXt.ExtensionMap
         public object Invoke<TKey>(object extended, TKey key, params object[] parameters)
         {
             if (MappedAttributes.TryGetValue(key, out IExtensionAttribute attr))
-            {
                 return attr.Invoke(parameters);
-            }
-            else return null;
+            
+            return null;
         }
 
-        internal class AlreadyExtendedException : Exception
+        private sealed class AlreadyExtendedException : Exception
         {
             public object ExtendedWithKey { get; }
             public AlreadyExtendedException(object extendedWithKey)
                 : this("", extendedWithKey)
             { }
 
-            public AlreadyExtendedException(string message, object extendedWithKey) : base(message)
+            private AlreadyExtendedException(string message, object extendedWithKey) : base(message)
             {
                 ExtendedWithKey = extendedWithKey;
             }

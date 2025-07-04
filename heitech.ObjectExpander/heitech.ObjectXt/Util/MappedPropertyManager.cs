@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace heitech.ObjectXt.Util
@@ -12,8 +13,8 @@ namespace heitech.ObjectXt.Util
 
         internal MappedPropertyManager(object obj)
         {
-            this.origin = obj;
-            this.originType = obj.GetType();
+            origin = obj;
+            originType = obj.GetType();
             dictionary = obj.AllProperties();
         }
 
@@ -67,7 +68,7 @@ namespace heitech.ObjectXt.Util
         }
 
         private bool WithNullValueAndCorrectObjectType(object obj, string key, Type t)
-            => obj == null && originType.GetProperty(key, flags()).PropertyType.IsDownCastable(t);
+            => obj == null && (originType.GetProperty(key, flags())?.PropertyType?.IsDownCastable(t) ?? false);
         private static bool ExpectedOrAssignable(Type propType, Type expected) 
             => propType == expected || propType.IsDownCastable(expected);
 
@@ -96,19 +97,14 @@ namespace heitech.ObjectXt.Util
         public string ToString(string format, IFormatProvider formatProvider)
         {
             if (format == "o")
+                return $"{GetType().Name}: Origin '{origin}', OriginType '{originType}'";
+            
+            if (format == "a")
             {
-                return $"{this.GetType().Name}: Origin '{origin.ToString()}', OriginType '{originType}'";
+                return dictionary.Aggregate("MappedProperties: ", (current, item) => current + $"'key:{item.Key}, value:{item.Value.GetType().Name}'\n");
             }
-            else if (format =="a")
-            {
-                string s = "MappedProperties: ";
-                foreach (var item in dictionary)
-                {
-                    s += $"'key:{item.Key}, value:{item.Value.GetType().Name}'\n";
-                }
-                return s;
-            }
-            else return this.GetType().Name;
+            
+            return this.GetType().Name;
         }
     }
 }

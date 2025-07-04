@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Threading.Tasks;
 using heitech.ObjectXt.ExtensionMap;
+using heitech.ObjectXt.Interface;
 using heitech.ObjectXt.Interfaces;
 
 namespace heitech.ObjectXt
 {
+    /// <summary>
+    /// Provides Entry and Extension methods for the object extender functionality 
+    /// </summary>
     public static class ObjectExtender
     {
-        public static void StartExtension()
+        public static void Entry()
         {
             lock (locker)
             {

@@ -1,6 +1,7 @@
 ﻿using heitech.ObjectXt.Interfaces;
 using System;
 using System.Collections.Generic;
+using heitech.ObjectXt.Interface;
 
 namespace heitech.ObjectXt.ExtensionMap
 {

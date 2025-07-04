@@ -1,9 +1,16 @@
 ﻿using System;
 
-namespace heitech.ObjectXt.Interfaces
+namespace heitech.ObjectXt.Interface
 {
+    /// <summary>
+    /// Create Attribute objects to extend the target object
+    /// </summary>
     internal interface IAttributeFactory
     {
+        /// <summary>
+        /// Simple attribute map
+        /// </summary>
+        /// <returns></returns>
         IAttributeMap GetMap();
         IExtensionAttribute CreateActionAttribute<TKey>(TKey key, Action a);
         IExtensionAttribute CreateActionAttribute<TKey, T>(TKey key, Action<T> a);

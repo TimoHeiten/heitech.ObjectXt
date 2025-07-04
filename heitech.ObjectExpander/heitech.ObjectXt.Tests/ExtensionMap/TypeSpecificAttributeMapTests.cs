@@ -2,6 +2,7 @@
 using heitech.ObjectXt.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using heitech.ObjectXt.Interface;
 
 namespace heitech.ObjectXt.Tests.ExtensionMap
 {

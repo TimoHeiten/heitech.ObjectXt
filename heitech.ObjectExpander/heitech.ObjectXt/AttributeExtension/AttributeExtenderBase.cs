@@ -94,7 +94,7 @@ namespace heitech.ObjectXt.AttributeExtension
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
         }
 
         public bool Equals(IAttributeExtender<T> other)

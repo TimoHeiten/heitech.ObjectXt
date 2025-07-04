@@ -1,10 +1,10 @@
 ﻿using heitech.ObjectXt.ExtensionMap.Attributes;
-using heitech.ObjectXt.Interfaces;
 using System;
+using heitech.ObjectXt.Interface;
 
 namespace heitech.ObjectXt.ExtensionMap
 {
-    internal class AttributeFactory : IAttributeFactory
+    internal sealed class AttributeFactory : IAttributeFactory
     {
         private readonly IAttributeMap map;
         private AttributeFactory(IAttributeMap map)

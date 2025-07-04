@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Threading.Tasks;
+using heitech.ObjectXt.Interface;
 
 namespace heitech.ObjectXt.Tests.Extender
 {

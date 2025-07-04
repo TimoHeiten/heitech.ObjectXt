@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace heitech.ObjectXt.Util
 {
+    /// <summary>
+    /// Reflection helper
+    /// </summary>
     public interface IMappedPropertyManager : IFormattable
     {
         object this[string name] { get; set; }

@@ -5,6 +5,9 @@ using System.Reflection;
 
 namespace heitech.ObjectXt.Util
 {
+    /// <summary>
+    /// Utils to work with obj extender internals
+    /// </summary>
     public static class ObjectUtils
     {
         public static IMappedPropertyManager GeneratePropertyManager(this object obj)

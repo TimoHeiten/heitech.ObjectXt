@@ -8,18 +8,36 @@ namespace heitech.ObjectXt
 {
     public static class ObjectExtensionCaller
     {
+        /// <summary>
+        /// call registered action
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="key"></param>
+        /// <typeparam name="TKey"></typeparam>
         public static void Call<TKey>(this IMarkedExtendable obj, TKey key)
         {
             var args = new IMarkedExtendable[] { };
             InvokeOnMap(() => AttributeMap().Invoke(obj, key, args), obj, key, null, args);
         }
 
+        /// <summary>
+        /// call registered action
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="key"></param>
+        /// <typeparam name="TKey"></typeparam>
         public static void Call<TKey, TParam>(this IMarkedExtendable obj, TKey key, TParam param)
         {
             var args = new object[] { param};
             InvokeOnMap(() => AttributeMap().Invoke(obj, key, args), obj, key, null, args);
         }
 
+        /// <summary>
+        /// call registered action
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="key"></param>
+        /// <typeparam name="TKey"></typeparam>
         public static void Call<TKey, TParam, TParam2>(this IMarkedExtendable obj, TKey key, TParam param, TParam2 param2)
         {
             var args = new object[] { param, param2 };
@@ -36,6 +54,14 @@ namespace heitech.ObjectXt
             => throw new NotImplementedException();
 
 
+        /// <summary>
+        /// Call registered fn with result
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="key"></param>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <returns></returns>
         public static TResult Invoke<TKey, TResult>(this IMarkedExtendable obj, TKey key)
         {
             TResult result = default(TResult);
@@ -45,6 +71,15 @@ namespace heitech.ObjectXt
             return result;
         }
 
+        /// <summary>
+        /// Call registered fn with result
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="key"></param>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <typeparam name="TParam"></typeparam>
+        /// <returns></returns>
         public static TResult Invoke<TKey, TResult, TParam>(this IMarkedExtendable obj, TKey key, TParam param)
         {
             TResult result = default(TResult);
@@ -53,7 +88,7 @@ namespace heitech.ObjectXt
             return result;
         }
 
-        static void InvokeOnMap(Action _do, IMarkedExtendable obj, object key, Type returnType, params object[] parameters)
+        private static void InvokeOnMap(Action _do, IMarkedExtendable obj, object key, Type returnType, params object[] parameters)
         {
             if (AttributeMap().CanInvoke(obj, key, returnType, parameters))
             {

@@ -1,7 +1,5 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using heitech.ObjectXt.SafeGet;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,14 +22,12 @@ namespace heitech.ObjectXt.Tests.SafeGet
 
         [TestInitialize]
         public void Init()
-        {
-            _getter = new ObjectSafeGetter(GetItems());
-        }
+            => _getter = new ObjectSafeGetter(GetItems());
 
         [TestMethod]
         public void SafeGetter_TryGet_Returns_True_If_Type_Is_Once_In_Collection()
         {
-            bool isInCollection = _getter.TryGet(out int i);
+            var isInCollection = _getter.TryGet(out int i);
 
             Assert.IsTrue(isInCollection);
             Assert.AreEqual(42, i);
